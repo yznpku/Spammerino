@@ -1,0 +1,41 @@
+{
+	"manifest_version": 2,
+	"name": "Spammerino",
+	"version": "1.0.0",
+	"icons": {
+		"16": "image/logo16.png",
+		"24": "image/logo24.png",
+		"32": "image/logo32.png",
+		"48": "image/logo48.png",
+		"64": "image/logo64.png",
+		"128": "image/logo128.png"
+	},
+	"page_action": {
+		"default_icon": {
+			"16": "image/logo16.png",
+			"24": "image/logo24.png",
+			"32": "image/logo32.png",
+			"48": "image/logo48.png",
+			"64": "image/logo64.png",
+			"128": "image/logo128.png"
+		}
+	},
+	"background": {
+		"scripts": [ "js/background.js" ],
+		"persistent": false
+	},
+	"content_scripts": [
+		{
+			"js": [ "contrib/jquery-2.2.3.min.js", "js/twitch.js", "js/spammerino.js" ],
+			"css": [ "css/spammerino.css", "css/twitch.css" ],
+			"matches": [ "*://www.twitch.tv/*" ],
+			"run_at": "document_end"
+		}
+	],
+	"web_accessible_resources": [
+		"image/*.png"
+	],
+	"permissions": [
+		"tabs"
+	]
+}

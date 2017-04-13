@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
-	"name": "Spammerino",
-	"version": "1.0.0",
+	"name": "Spammerino (for Twitch)",
+	"version": "1.0.1",
 	"icons": {
 		"16": "image/logo16.png",
 		"24": "image/logo24.png",

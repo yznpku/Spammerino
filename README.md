@@ -11,6 +11,11 @@ Features
 * **The repeat button**: Add a button after each message in twitch chat. Click it and you'll send the exact same message to the chat.
 * **Message hover-pin**: Locking down a message for copy-pasting (as well as clicking our brand new button) is no easy task especially when the traffic of the chat is high. Worry no more! Now when you hover a message, it will remain its position for the rest of its life (or, of course, until you decide to let go). Do whatever you want to that message!
 
+Installation
+---
+
+Download from [Chrome web store](https://chrome.google.com/webstore/detail/mmfojmapmifacojoajmmcdhfapoagfho) or build from source (see below).
+
 Compatibility
 ---
 

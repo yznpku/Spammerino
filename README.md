@@ -24,6 +24,8 @@ The following features are in the plan. Keep an eye on the updates!
 * **Recommended spam**: We will analyze on the fly what most people are talking about. See whether you want to say the same thing!
 * **Spam archive**: Save some messages for later usage.
 * **R9k bypass**: Let's make this useless feature more useless. Kappa.
+* **Emote hype**: Send an emote by clicking it in the chat.
+* **Add configuration for the behaviour when clicking the button**.
 * **Support more sites other than Twitch**.
 * **Support other browsers other than Chrome**.
 

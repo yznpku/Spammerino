@@ -24,6 +24,10 @@ insertSpamButton = (parent) ->
     site.chatInputArea().focus().val(spamMessage).blur()
     site.chatSendButton().click()
 
+wheelHandler = (event) ->
+  scroll = site.chatScrollArea().scrollTop();
+  site.chatScrollArea().scrollTop(scroll - event.originalEvent.wheelDeltaY);
+
 installHoverPin = (chatLine) ->
   $chatLine = $(chatLine)
 
@@ -41,6 +45,7 @@ installHoverPin = (chatLine) ->
       top: offset_top
       width: width
       'z-index': 1
+    $chatLine.bind 'mousewheel', wheelHandler
     
   $chatLine.mouseleave ->
     $chatLine.siblings('.temp-spacing').remove()
@@ -50,4 +55,6 @@ installHoverPin = (chatLine) ->
       left: ''
       width: ''
       'z-index': ''
+    $chatLine.unbind 'mousewheel', wheelHandler
+
 

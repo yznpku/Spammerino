@@ -19,6 +19,9 @@ window.spammerinoSiteHandler =
       tokens = tokens.get().filter (e) -> e.length
       tokens.join ' '
 
+  chatScrollArea: ->
+    $('.chat-messages .tse-scroll-content')
+
   chatInputArea: ->
     $('.chat-input textarea')
 

@@ -1,9 +1,10 @@
-.chat-line {
+.chat-messages .chat-line {
 	position: relative;
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 
-.chat-line:hover {
+.chat-messages .chat-line:hover {
   background-color: #EF5350 !important;
+  border-bottom-color: #EF5350 !important;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }

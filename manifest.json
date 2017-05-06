@@ -1,7 +1,8 @@
 {
 	"manifest_version": 2,
-	"name": "Spammerino (for Twitch)",
-	"version": "1.0.1",
+	"name": "Spammerino - Twitch Chat Enhancement",
+	"version": "0.0.0",
+	"homepage_url": "https://github.com/yznpku/Spammerino",
 	"icons": {
 		"16": "image/logo16.png",
 		"24": "image/logo24.png",

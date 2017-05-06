@@ -46,7 +46,7 @@ installHoverPin = (chatLine) ->
       width: width
       'z-index': 1
     $chatLine.bind 'mousewheel', wheelHandler
-    
+
   $chatLine.mouseleave ->
     $chatLine.siblings('.temp-spacing').remove()
     $chatLine.css

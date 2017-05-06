@@ -1,3 +1,13 @@
+spamMessageTokensFromNode = (node) ->
+  switch node.nodeType
+    when Node.ELEMENT_NODE
+      if $(node).children('img').size()
+        [$(node).find('img').attr 'alt']
+      else
+        [].concat (spamMessageTokensFromNode child for child in $(node).contents())...
+    when Node.TEXT_NODE
+      [node.textContent.trim()]
+
 window.spammerinoSiteHandler =
 
   buttonImage: chrome.extension.getURL 'image/logo16.png'
@@ -10,14 +20,9 @@ window.spammerinoSiteHandler =
     if $(message).attr('data-raw')?
       decodeURIComponent $(message).attr('data-raw')
     else
-      tokens = $(message).contents().map (i, element) ->
-        switch element.nodeType
-          when Node.ELEMENT_NODE
-            $(element).find('img').attr 'alt'
-          when Node.TEXT_NODE
-            element.textContent.trim()
-      tokens = tokens.get().filter (e) -> e.length
-      tokens.join ' '
+      spamMessageTokensFromNode message
+        .filter (token) -> token.length
+        .join ' '
 
   chatScrollArea: ->
     $('.chat-messages .tse-scroll-content')

@@ -1,0 +1,63 @@
+[
+  {
+    "id": "repeat-button",
+    "name": "Repeat Button",
+    "toggle": { "default": true },
+    "children": [
+      {
+        "id": "repeat-button-click",
+        "name": "Click Behavior:",
+        "toggle": { "default": true },
+        "options": {
+          "type": "select",
+          "select": [
+            { "id": "send", "name": "Send selected message" },
+            { "id": "copy", "name": "Copy selected message to clipboard" },
+            { "id": "overwrite", "name": "Copy selected message to chat input" },
+            { "id": "append", "name": "Append selected message to chat input" }
+          ],
+          "default": "send"
+        }
+      },
+      {
+        "id": "repeat-button-shift-click",
+        "name": "Shift-click Behavior:",
+        "toggle": { "default": true },
+        "options": {
+          "type": "select",
+          "select": [
+            { "id": "send", "name": "Send selected message" },
+            { "id": "copy", "name": "Copy selected message to clipboard" },
+            { "id": "overwrite", "name": "Copy selected message to chat input" },
+            { "id": "append", "name": "Append selected message to chat input" }
+          ],
+          "default": "append"
+        }
+      }
+    ]
+  }, 
+  {
+    "id": "hover",
+    "name": "Hover Behavior",
+    "children": [
+      {
+        "id": "hover-pin",
+        "name": "Pin:",
+        "toggle": { "default": true },
+        "options": {
+          "type": "select",
+          "select": [
+            { "id": "individual", "name": "Pin individual message" },
+            { "id": "all", "name": "Pin the entire chat history" }
+          ],
+          "default": "individual"
+        }
+      },
+      {
+        "id": "hover-highlight",
+        "name": "Highlight",
+        "toggle": { "default": true }
+      }
+    ]
+  }
+]

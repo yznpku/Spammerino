@@ -1,17 +1,21 @@
+Spammerino = window.Spammerino ?= {}
 site = window.spammerinoSiteHandler
 MutationObserver = window.MutationObserver or window.WebKitMutationObserver;
 observerConfig = { childList: true, subtree: true }
 
 spamButtonHtml = '<div class="spam-button"><img /></div>'
 
-$('document').ready ->
+new Promise (success) ->
+  Spammerino.initConfig success
+.then ->
+  new Promise $('document').ready
+.then ->
   observer = new MutationObserver (mutations) ->
     for mutation in mutations
       for node in mutation.addedNodes
         if site.isValidChatLine node
           insertSpamButton node
           installHoverPin node
-
   observer.observe $('body')[0], observerConfig
 
 insertSpamButton = (parent) ->

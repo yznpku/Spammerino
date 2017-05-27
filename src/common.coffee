@@ -5,31 +5,48 @@ Spammerino = window.Spammerino ?= {}
 Object.assign Spammerino,
 
   initConfig: (success) ->
-    getDefaultConfig = (node) ->
-      defaultConfig = {}
+    getConfigList = (node) ->
+      configList = {}
       if node.toggle?
-        defaultConfig["#{node.id}-toggle"] = node.toggle.default
+        configList["#{node.id}-toggle"] =
+          type: 'toggle'
+          default: node.toggle.default
       if node.options?
-        defaultConfig[node.id] = node.options.default
+        configList[node.id] =
+          type: node.options.type
+          default: node.options.default
+        switch node.options.type
+          when 'select'
+            configList[node.id].select = (i.id for i in node.options.select)
       if node.children?
-        Object.assign defaultConfig, (getDefaultConfig child for child in node.children)...
-      defaultConfig
+        Object.assign configList, (getConfigList child for child in node.children)...
+      configList
+
+    isValidConfigValue = (id, value) ->
+      return false if id not of configList
+      switch configList[id].type
+        when 'toggle'
+          typeof(value) == 'boolean'
+        when 'select'
+          value in configList[id].select
 
     configDef = null
-    defaultConfig = null
-    config = null
+    configList = null
+    config = {}
 
     new Promise (success) ->
       $.get (chrome.extension.getURL 'config.json'), '', success
     .then (data) ->
       configDef = JSON.parse data
-      defaultConfig = Object.assign (getDefaultConfig item for item in configDef)...
+      configList = Object.assign (getConfigList item for item in configDef)...
       new Promise (success) -> storage.get null, success
     .then (storageItems) ->
-      config = Object.assign {}, defaultConfig, storageItems
+      for k, v of configList
+        config[k] = v.default
+        config[k] = storageItems[k] if storageItems[k]? and isValidConfigValue k, storageItems[k]
       storage.set config
       Object.assign Spammerino,
         configDef: configDef
-        defaultConfig: defaultConfig
+        configList: configList
         config: config
       success()

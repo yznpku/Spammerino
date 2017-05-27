@@ -99,7 +99,7 @@ label {
   font-size: medium;
 }
 
-.option {
+.input-inline {
   display: inline-block;
   position: absolute;
   left: 270px;

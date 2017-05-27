@@ -15,6 +15,9 @@ window.spammerinoSiteHandler =
   isValidChatLine: (element) ->
     $(element).is '.chat-line:not(.admin):not(.special-message):not(.notification)'
 
+  isChatMessagesRoot: (element) ->
+    $(element).is '.chat-messages'
+
   spamMessage: (button) ->
     message = $(button).parent().find('.message')[0]
     if $(message).attr('data-raw')?

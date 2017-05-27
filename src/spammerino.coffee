@@ -15,7 +15,9 @@ new Promise (success) ->
       for node in mutation.addedNodes
         if site.isValidChatLine node
           insertSpamButton node
-          installHoverPin node
+          # installIndividualHoverPin node
+        if site.isChatMessagesRoot node
+          installGlobalHoverPin()
   observer.observe $('body')[0], observerConfig
 
 insertSpamButton = (parent) ->
@@ -32,7 +34,7 @@ wheelHandler = (event) ->
   scroll = site.chatScrollArea().scrollTop();
   site.chatScrollArea().scrollTop(scroll - event.originalEvent.wheelDeltaY);
 
-installHoverPin = (chatLine) ->
+installIndividualHoverPin = (chatLine) ->
   $chatLine = $(chatLine)
 
   $chatLine.mouseenter ->
@@ -61,4 +63,31 @@ installHoverPin = (chatLine) ->
       'z-index': ''
     $chatLine.unbind 'mousewheel', wheelHandler
 
+installGlobalHoverPin = ->
+  injectedFunction = ->
+    # Handle mouse events to modify 'stuckToBottom' property
+    emberComponent = window.App.__container__.lookup('-view-registry:main')[$('.chat-room').children()[0].id]
+    $('.chat-messages').mouseenter ->
+      console.log 'enter'
+      emberComponent._setStuckToBottom false
+    $('.chat-messages').mousemove ->
+      if emberComponent.stuckToBottom
+        emberComponent._setStuckToBottom false
+    $('.chat-messages').mouseleave ->
+      console.log 'leave'
+      emberComponent._setStuckToBottom true
+      emberComponent._scrollToBottom()
+
+    # Remove original mousewheel event listeners
+    orignalEventListener = $._data($(".chat-messages .tse-scroll-content")[0], "events").wheel[0].handler
+    $('.chat-messages .tse-scroll-content').unbind 'scroll mousewheel wheel DOMMouseScroll', orignalEventListener
+
+    # Add a class to disable 'More messages below.' message mouse event capturing
+    $('.chat-room').addClass 'spammerino-global-hover-pin'
+
+  # Inject the script above
+  script = document.createElement('script')
+  script.textContent = '(' + injectedFunction + ')()'
+  (document.head||document.documentElement).appendChild(script)
+  script.remove()
 

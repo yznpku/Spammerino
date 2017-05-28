@@ -27,7 +27,13 @@
 	},
 	"content_scripts": [
 		{
-			"js": [ "contrib/jquery-2.2.3.min.js", "js/common.js", "js/twitch.js", "js/spammerino.js" ],
+			"js": [
+				"contrib/jquery-2.2.3.min.js",
+				"js/clipboard.js",
+				"js/common.js",
+				"js/twitch.js",
+				"js/spammerino.js"
+			],
 			"css": [ "css/spammerino.css", "css/twitch.css" ],
 			"matches": [ "*://www.twitch.tv/*" ],
 			"run_at": "document_end"

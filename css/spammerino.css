@@ -7,6 +7,14 @@
     cursor: pointer;
 }
 
+.spam-button:hover {
+  background-color: rgba(128, 128, 128, 0.3)
+}
+
+.spam-button:active {
+  background-color: rgba(128, 128, 128, 0.6)
+}
+
 .spam-button img {
   position: absolute;
   left: 50%;

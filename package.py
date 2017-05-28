@@ -7,7 +7,7 @@ def zipDirectory(path, ziph):
       ziph.write(os.path.join(root, file))
 
 with zipfile.ZipFile('Spammerino.zip', 'w', zipfile.ZIP_DEFLATED) as zipf:
-  for path in ['contrib/', 'css/', 'js/', 'image/']:
+  for path in ['contrib/', 'css/', 'js/', 'image/', 'html/']:
     zipDirectory(path, zipf)
-  for file in ['LICENSE.md', 'manifest.json']:
+  for file in ['LICENSE.md', 'manifest.json', 'config.json']:
     zipf.write(file)

@@ -1,0 +1,107 @@
+body {
+  margin: 0px;
+  background-color: #efeef1;
+  font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+.title-bar {
+  position: relative;
+  background-color: #201c2b;
+  color: #cbc8d0;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.title-bar-logo-area {
+  padding: 30px;
+  display: table;
+}
+
+.title-bar-logo-area span {
+  display: table-cell;
+  vertical-align: middle;
+  padding-left: 20px;
+  font-size: 24pt;
+}
+
+.title-bar-buttons {
+  position: absolute;
+  top: 50%;
+  right: 50px;
+  transform: translateY(-50%);
+}
+
+button {
+  background: #6441a4;
+  color: white;
+  margin-left: 10px;
+  transition: all .2s;
+  font-weight: 400;
+  line-height: 30px;
+  white-space: nowrap;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  text-decoration: none;
+  width: 128px;
+}
+
+button:hover {
+  background: #7d5bbe;
+  color: white;
+}
+
+button:active {
+  box-shadow: 0 0 6px 0 #7d5bbe;
+  background: #6441a4;
+}
+
+button.save-success {
+  background: #66bb6a;
+}
+
+#options-root {
+  color: #433f4a;
+}
+
+.option-line {
+  position: relative;
+}
+
+input[type="checkbox"] {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0 5px;
+}
+
+label {
+  margin-left: 25px;
+}
+
+.item {
+  position: relative;
+  padding-left: 50px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.item-0 {
+  font-size: large;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.item-0:nth-child(2n) {
+  background-color: rgb(217,217,217);
+}
+
+.item-1 {
+  font-size: medium;
+}
+
+.input-inline {
+  display: inline-block;
+  position: absolute;
+  left: 270px;
+}
+

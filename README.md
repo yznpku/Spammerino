@@ -1,5 +1,5 @@
 Spammerino
-=== 
+===
 
 This extension enables you to repeat any Twitch chat messages with one simple click.
 
@@ -30,7 +30,6 @@ The following features are in the plan. Keep an eye on the updates!
 * **Spam archive**: Save some messages for later usage.
 * **R9k bypass**: Let's make this useless feature more useless. Kappa.
 * **Emote hype**: Send an emote by clicking it in the chat.
-* **Add configuration for the behaviour when clicking the button**.
 * **Support more sites other than Twitch**.
 * **Support other browsers other than Chrome**.
 

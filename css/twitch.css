@@ -12,3 +12,15 @@
 .spammerino-global-hover-pin .js-chat-more-messages {
   pointer-events: none;
 }
+
+img.emoticon {
+  cursor: pointer;
+}
+
+img.emoticon:hover {
+  filter: brightness(120%);
+}
+
+img.emoticon:active {
+  filter: brightness(90%);
+}

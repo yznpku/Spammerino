@@ -1,5 +1,5 @@
-window.spammerinoSiteHandler =
-
+Spammerino = window.Spammerino ?= {}
+Spammerino.site =
   buttonImage: chrome.extension.getURL 'image/logo16.png'
 
   isValidChatLine: (element) ->

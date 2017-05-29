@@ -1,15 +1,5 @@
-spamMessageTokensFromNode = (node) ->
-  switch node.nodeType
-    when Node.ELEMENT_NODE
-      if $(node).children('img').size()
-        [$(node).find('img').attr 'alt']
-      else
-        [].concat (spamMessageTokensFromNode child for child in $(node).contents())...
-    when Node.TEXT_NODE
-      [node.textContent.trim()]
-
-window.spammerinoSiteHandler =
-
+Spammerino = window.Spammerino ?= {}
+Spammerino.site =
   buttonImage: chrome.extension.getURL 'image/logo16.png'
 
   isValidChatLine: (element) ->
@@ -35,3 +25,13 @@ window.spammerinoSiteHandler =
 
   chatSendButton: ->
     $('.js-chat-buttons__submit')
+
+spamMessageTokensFromNode = (node) ->
+  switch node.nodeType
+    when Node.ELEMENT_NODE
+      if $(node).children('img').size()
+        [$(node).find('img').attr 'alt']
+      else
+        [].concat (spamMessageTokensFromNode child for child in $(node).contents())...
+    when Node.TEXT_NODE
+      [node.textContent.trim()]

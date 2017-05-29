@@ -47,7 +47,6 @@
         "options": {
           "type": "select",
           "select": [
-            { "id": "original", "name": "Original (redirect to source channel)" },
             { "id": "send", "name": "Send selected emote" },
             { "id": "copy", "name": "Copy selected emote to clipboard" },
             { "id": "overwrite", "name": "Copy selected emote to chat input" },
@@ -63,7 +62,6 @@
         "options": {
           "type": "select",
           "select": [
-            { "id": "original", "name": "Original (redirect to source channel)" },
             { "id": "send", "name": "Send selected emote" },
             { "id": "copy", "name": "Copy selected emote to clipboard" },
             { "id": "overwrite", "name": "Copy selected emote to chat input" },

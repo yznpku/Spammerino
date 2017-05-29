@@ -28,7 +28,7 @@ new Promise (success) ->
 
   observer.observe $('body')[0], observerConfig
 
-spamButtonHandler = (message, action) ->
+messageActionHandler = (message, action) ->
   switch action
     when 'send'
       site.chatInputArea().focus().val(message).blur()
@@ -52,10 +52,10 @@ insertSpamButton = (parent) ->
     switch
       when e.shiftKey
         if Spammerino.config['repeat-button-shift-click-toggle']
-          spamButtonHandler message, Spammerino.config['repeat-button-shift-click']
+          messageActionHandler message, Spammerino.config['repeat-button-shift-click']
       else
         if Spammerino.config['repeat-button-click-toggle']
-          spamButtonHandler message, Spammerino.config['repeat-button-click']
+          messageActionHandler message, Spammerino.config['repeat-button-click']
 
 wheelHandler = (event) ->
   scroll = site.chatScrollArea().scrollTop();

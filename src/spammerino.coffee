@@ -1,5 +1,4 @@
 Spammerino = window.Spammerino ?= {}
-site = window.spammerinoSiteHandler
 MutationObserver = window.MutationObserver or window.WebKitMutationObserver;
 observerConfig = { childList: true, subtree: true }
 
@@ -14,17 +13,20 @@ new Promise (success) ->
     for mutation in mutations
       for node in mutation.addedNodes
         switch
-          when site.isValidChatLine node
+          when Spammerino.site.isValidChatLine node
             if Spammerino.config['repeat-button-toggle']
               insertSpamButton node
-            if Spammerino.config['hover-pin-toggle'] and Spammerino.config['hover-pin'] == 'individual'
-              installIndividualHoverPin node
 
-          when site.isChatMessagesRoot node
-            if Spammerino.config['hover-pin-toggle'] and Spammerino.config['hover-pin'] == 'global'
-              installGlobalHoverPin()
+          when Spammerino.site.isChatMessagesRoot node
+            if Spammerino.config['hover-pin-toggle']
+              switch Spammerino.config['hover-pin']
+                when 'individual'
+                  installIndividualHoverPin node
+                when 'global'
+                  installGlobalHoverPin()
             if Spammerino.config['hover-highlight-toggle']
               $('.chat-room').addClass 'spammerino-highlight'
+            installSpamButtonActions node
             replaceEmoteClickActions node
 
   observer.observe $('body')[0], observerConfig
@@ -32,24 +34,25 @@ new Promise (success) ->
 messageActionHandler = (message, action) ->
   switch action
     when 'send'
-      site.chatInputArea().focus().val(message).blur()
-      site.chatSendButton().click()
+      Spammerino.site.chatInputArea().focus().val(message).blur()
+      Spammerino.site.chatSendButton().click()
     when 'copy'
       Spammerino.copyToClipboard message
     when 'overwrite'
-      site.chatInputArea().focus().val(message).blur().focus()
+      Spammerino.site.chatInputArea().focus().val(message).blur().focus()
     when 'append'
-      currentString = site.chatInputArea().val()
+      currentString = Spammerino.site.chatInputArea().val()
       currentString += ' ' if not currentString.endsWith ' '
-      site.chatInputArea().focus().val(currentString + message).blur().focus()
+      Spammerino.site.chatInputArea().focus().val(currentString + message).blur().focus()
 
 insertSpamButton = (parent) ->
   spamButton = $.parseHTML(spamButtonHtml)[0]
   $(parent).append spamButton
-  $(spamButton).children().attr 'src', site.buttonImage
+  $(spamButton).children().attr 'src', Spammerino.site.buttonImage
 
-  $(spamButton).click (e) ->
-    message = site.spamMessage @
+installSpamButtonActions = (parent) ->
+  $(parent).on 'click', '.spam-button', (e) ->
+    message = Spammerino.site.spamMessage @
     switch
       when e.shiftKey
         if Spammerino.config['repeat-button-shift-click-toggle']
@@ -70,13 +73,14 @@ replaceEmoteClickActions = (parent) ->
           messageActionHandler emote, Spammerino.config['chat-emote-click']
 
 wheelHandler = (event) ->
-  scroll = site.chatScrollArea().scrollTop();
-  site.chatScrollArea().scrollTop(scroll - event.originalEvent.wheelDeltaY);
+  scroll = Spammerino.site.chatScrollArea().scrollTop();
+  Spammerino.site.chatScrollArea().scrollTop(scroll - event.originalEvent.wheelDeltaY);
 
-installIndividualHoverPin = (chatLine) ->
-  $chatLine = $(chatLine)
+installIndividualHoverPin = (parent) ->
+  $(parent).on 'mousewheel', '.chat-line', wheelHandler
 
-  $chatLine.mouseenter ->
+  $(parent).on 'mouseenter', '.chat-line', ->
+    $chatLine = $(@)
     offset_left = $chatLine.offset().left - parseInt($chatLine.css('marginLeft'), 10);
     offset_top = $chatLine.offset().top - parseInt($chatLine.css('marginTop'), 10);
     width = $chatLine.outerWidth()
@@ -90,9 +94,9 @@ installIndividualHoverPin = (chatLine) ->
       top: offset_top
       width: width
       'z-index': 1
-    $chatLine.bind 'mousewheel', wheelHandler
 
-  $chatLine.mouseleave ->
+  $(parent).on 'mouseleave', '.chat-line', ->
+    $chatLine = $(@)
     $chatLine.siblings('.temp-spacing').remove()
     $chatLine.css
       position: ''
@@ -100,7 +104,6 @@ installIndividualHoverPin = (chatLine) ->
       left: ''
       width: ''
       'z-index': ''
-    $chatLine.unbind 'mousewheel', wheelHandler
 
 installGlobalHoverPin = ->
   injectedFunction = ->

@@ -25,6 +25,7 @@ new Promise (success) ->
               installGlobalHoverPin()
             if Spammerino.config['hover-highlight-toggle']
               $('.chat-room').addClass 'spammerino-highlight'
+            replaceEmoteClickActions node
 
   observer.observe $('body')[0], observerConfig
 
@@ -56,6 +57,17 @@ insertSpamButton = (parent) ->
       else
         if Spammerino.config['repeat-button-click-toggle']
           messageActionHandler message, Spammerino.config['repeat-button-click']
+
+replaceEmoteClickActions = (parent) ->
+  $(parent).on 'click', 'img.emoticon', (e) ->
+    emote = $(@).attr 'alt'
+    switch
+      when e.shiftKey
+        if Spammerino.config['chat-emote-shift-click-toggle']
+          messageActionHandler emote, Spammerino.config['chat-emote-shift-click']
+      else
+        if Spammerino.config['chat-emote-click-toggle']
+          messageActionHandler emote, Spammerino.config['chat-emote-click']
 
 wheelHandler = (event) ->
   scroll = site.chatScrollArea().scrollTop();

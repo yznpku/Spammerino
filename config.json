@@ -37,6 +37,42 @@
     ]
   },
   {
+    "id": "chat-emote",
+    "name": "Chat History Emote Clicking",
+    "children": [
+      {
+        "id": "chat-emote-click",
+        "name": "Click Behavior:",
+        "toggle": { "default": true },
+        "options": {
+          "type": "select",
+          "select": [
+            { "id": "send", "name": "Send selected emote" },
+            { "id": "copy", "name": "Copy selected emote to clipboard" },
+            { "id": "overwrite", "name": "Copy selected emote to chat input" },
+            { "id": "append", "name": "Append selected emote to chat input" }
+          ],
+          "default": "append"
+        }
+      },
+      {
+        "id": "chat-emote-shift-click",
+        "name": "Shift-click Behavior:",
+        "toggle": { "default": true },
+        "options": {
+          "type": "select",
+          "select": [
+            { "id": "send", "name": "Send selected emote" },
+            { "id": "copy", "name": "Copy selected emote to clipboard" },
+            { "id": "overwrite", "name": "Copy selected emote to chat input" },
+            { "id": "append", "name": "Append selected emote to chat input" }
+          ],
+          "default": "send"
+        }
+      }
+    ]
+  },
+  {
     "id": "hover",
     "name": "Hover Behavior",
     "children": [

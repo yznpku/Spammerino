@@ -1,5 +1,5 @@
 Spammerino
-=== 
+===
 
 This extension enables you to repeat any Twitch chat messages with one simple click.
 
@@ -9,7 +9,9 @@ Features
 ---
 
 * **The repeat button**: Add a button after each message in twitch chat. Click it and you'll send the exact same message to the chat.
-* **Message hover-pin**: Locking down a message for copy-pasting (as well as clicking our brand new button) is no easy task especially when the traffic of the chat is high. Worry no more! Now when you hover a message, it will remain its position for the rest of its life (or, of course, until you decide to let go). Do whatever you want to that message!
+* **Message hover-pin**: Messages from the chat history are rarely expected to keep scrolling under your cursor. Spammerino auto locks the chat history for you whenever you hover over the chat history area.
+* **Chat History Emote Clicking**: In most cases, the emote you want to send is already present in the chat history. Instead of typing the emote or finding it in the emote menu, you can now grab that emote directly from chat history.
+* **Customization**: All features above can be disabled or customized in the options menu.
 
 Installation
 ---
@@ -29,8 +31,6 @@ The following features are in the plan. Keep an eye on the updates!
 * **Recommended spam**: We will analyze on the fly what most people are talking about. See whether you want to say the same thing!
 * **Spam archive**: Save some messages for later usage.
 * **R9k bypass**: Let's make this useless feature more useless. Kappa.
-* **Emote hype**: Send an emote by clicking it in the chat.
-* **Add configuration for the behaviour when clicking the button**.
 * **Support more sites other than Twitch**.
 * **Support other browsers other than Chrome**.
 

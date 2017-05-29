@@ -25,10 +25,11 @@ new Promise (success) ->
               installGlobalHoverPin()
             if Spammerino.config['hover-highlight-toggle']
               $('.chat-room').addClass 'spammerino-highlight'
+            replaceEmoteClickActions node
 
   observer.observe $('body')[0], observerConfig
 
-spamButtonHandler = (message, action) ->
+messageActionHandler = (message, action) ->
   switch action
     when 'send'
       site.chatInputArea().focus().val(message).blur()
@@ -36,11 +37,11 @@ spamButtonHandler = (message, action) ->
     when 'copy'
       Spammerino.copyToClipboard message
     when 'overwrite'
-      site.chatInputArea().focus().val(message)
+      site.chatInputArea().focus().val(message).blur().focus()
     when 'append'
       currentString = site.chatInputArea().val()
       currentString += ' ' if not currentString.endsWith ' '
-      site.chatInputArea().focus().val(currentString + message)
+      site.chatInputArea().focus().val(currentString + message).blur().focus()
 
 insertSpamButton = (parent) ->
   spamButton = $.parseHTML(spamButtonHtml)[0]
@@ -52,10 +53,21 @@ insertSpamButton = (parent) ->
     switch
       when e.shiftKey
         if Spammerino.config['repeat-button-shift-click-toggle']
-          spamButtonHandler message, Spammerino.config['repeat-button-shift-click']
+          messageActionHandler message, Spammerino.config['repeat-button-shift-click']
       else
         if Spammerino.config['repeat-button-click-toggle']
-          spamButtonHandler message, Spammerino.config['repeat-button-click']
+          messageActionHandler message, Spammerino.config['repeat-button-click']
+
+replaceEmoteClickActions = (parent) ->
+  $(parent).on 'click', 'img.emoticon', (e) ->
+    emote = $(@).attr 'alt'
+    switch
+      when e.shiftKey
+        if Spammerino.config['chat-emote-shift-click-toggle']
+          messageActionHandler emote, Spammerino.config['chat-emote-shift-click']
+      else
+        if Spammerino.config['chat-emote-click-toggle']
+          messageActionHandler emote, Spammerino.config['chat-emote-click']
 
 wheelHandler = (event) ->
   scroll = site.chatScrollArea().scrollTop();

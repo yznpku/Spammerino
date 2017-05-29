@@ -36,11 +36,11 @@ messageActionHandler = (message, action) ->
     when 'copy'
       Spammerino.copyToClipboard message
     when 'overwrite'
-      site.chatInputArea().focus().val(message)
+      site.chatInputArea().focus().val(message).blur().focus()
     when 'append'
       currentString = site.chatInputArea().val()
       currentString += ' ' if not currentString.endsWith ' '
-      site.chatInputArea().focus().val(currentString + message)
+      site.chatInputArea().focus().val(currentString + message).blur().focus()
 
 insertSpamButton = (parent) ->
   spamButton = $.parseHTML(spamButtonHtml)[0]

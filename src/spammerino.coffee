@@ -4,10 +4,7 @@ observerConfig = { childList: true, subtree: true }
 
 spamButtonHtml = '<div class="spam-button"><img /></div>'
 
-new Promise (success) ->
-  Spammerino.initConfig success
-.then ->
-  new Promise $('document').ready
+new Promise $('document').ready
 .then ->
   observer = new MutationObserver (mutations) ->
     for mutation in mutations
@@ -48,7 +45,7 @@ messageActionHandler = (message, action) ->
 insertSpamButton = (parent) ->
   spamButton = $.parseHTML(spamButtonHtml)[0]
   $(parent).append spamButton
-  $(spamButton).children().attr 'src', Spammerino.site.buttonImage
+  $(spamButton).children().attr 'src', Spammerino.buttonImageSrc
 
 installSpamButtonActions = (parent) ->
   $(parent).on 'click', '.spam-button', (e) ->
@@ -106,27 +103,20 @@ installIndividualHoverPin = (parent) ->
       'z-index': ''
 
 installGlobalHoverPin = ->
-  injectedFunction = ->
-    # Handle mouse events to modify 'stuckToBottom' property
-    emberComponent = window.App.__container__.lookup('-view-registry:main')[$('.chat-room').children()[0].id]
-    $('.chat-messages').mouseenter ->
+  # Handle mouse events to modify 'stuckToBottom' property
+  emberComponent = window.App.__container__.lookup('-view-registry:main')[$('.chat-room').children()[0].id]
+  $('.chat-messages').mouseenter ->
+    emberComponent._setStuckToBottom false
+  $('.chat-messages').mousemove ->
+    if emberComponent.stuckToBottom
       emberComponent._setStuckToBottom false
-    $('.chat-messages').mousemove ->
-      if emberComponent.stuckToBottom
-        emberComponent._setStuckToBottom false
-    $('.chat-messages').mouseleave ->
-      emberComponent._setStuckToBottom true
-      emberComponent._scrollToBottom()
+  $('.chat-messages').mouseleave ->
+    emberComponent._setStuckToBottom true
+    emberComponent._scrollToBottom()
 
-    # Remove original mousewheel event listeners
-    orignalEventListener = $._data($(".chat-messages .tse-scroll-content")[0], "events").wheel[0].handler
-    $('.chat-messages .tse-scroll-content').unbind 'scroll mousewheel wheel DOMMouseScroll', orignalEventListener
+  # Remove original mousewheel event listeners
+  orignalEventListener = $._data($(".chat-messages .tse-scroll-content")[0], "events").wheel[0].handler
+  $('.chat-messages .tse-scroll-content').unbind 'scroll mousewheel wheel DOMMouseScroll', orignalEventListener
 
-    # Add a class to disable 'More messages below.' message mouse event capturing
-    $('.chat-room').addClass 'spammerino-global-hover-pin'
-
-  # Inject the script above
-  script = document.createElement('script')
-  script.textContent = '(' + injectedFunction + ')()'
-  (document.head||document.documentElement).appendChild(script)
-  script.remove()
+  # Add a class to disable 'More messages below.' message mouse event capturing
+  $('.chat-room').addClass 'spammerino-global-hover-pin'

@@ -1,7 +1,5 @@
 Spammerino = window.Spammerino ?= {}
 Spammerino.site =
-  buttonImage: chrome.extension.getURL 'image/logo16.png'
-
   isValidChatLine: (element) ->
     $(element).is '.chat-line:not(.admin):not(.special-message):not(.notification)'
 

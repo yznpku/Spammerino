@@ -29,10 +29,8 @@
 		{
 			"js": [
 				"contrib/jquery-2.2.3.min.js",
-				"js/clipboard.js",
 				"js/common.js",
-				"js/twitch.js",
-				"js/spammerino.js"
+				"js/content.js"
 			],
 			"css": [ "css/spammerino.css", "css/twitch.css" ],
 			"matches": [ "*://www.twitch.tv/*" ],
@@ -42,6 +40,7 @@
 	"options_page": "html/options.html",
 	"web_accessible_resources": [
 		"image/*.png",
+		"js/*.js",
 		"config.json"
 	],
 	"permissions": [

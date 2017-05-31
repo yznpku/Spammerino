@@ -116,7 +116,7 @@ installGlobalHoverPin = ->
 
   # Remove original mousewheel event listeners
   orignalEventListener = $._data($(".chat-messages .tse-scroll-content")[0], "events").wheel[0].handler
-  $('.chat-messages .tse-scroll-content').unbind 'scroll mousewheel wheel DOMMouseScroll', orignalEventListener
+  $('.chat-messages .tse-scroll-content').unbind 'scroll mousewheel wheel DOMMouseScroll mousedown', orignalEventListener
 
   # Add a class to disable 'More messages below.' message mouse event capturing
   $('.chat-room').addClass 'spammerino-global-hover-pin'

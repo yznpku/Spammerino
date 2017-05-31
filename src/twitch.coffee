@@ -3,11 +3,17 @@ Spammerino.site =
   isValidChatLine: (element) ->
     $(element).is '.chat-line:not(.admin):not(.special-message):not(.notification)'
 
+  isAdminChatLine: (element) ->
+    $(element).is '.chat-line.admin'
+
   isChatMessagesRoot: (element) ->
     $(element).is '.chat-messages'
 
-  spamMessage: (button) ->
-    window.App.__container__.lookup('-view-registry:main')[button.parentNode.id].msgObject.message
+  isChatInterface: (element) ->
+    $(element).is '.chat-interface'
+
+  spamMessage: (chatLine) ->
+    window.App.__container__.lookup('-view-registry:main')[chatLine.id].msgObject
 
   chatScrollArea: ->
     $('.chat-messages .tse-scroll-content')
@@ -17,3 +23,8 @@ Spammerino.site =
 
   chatSendButton: ->
     $('.js-chat-buttons__submit')
+
+  currentUser: ->
+    window.App.__container__.lookup('-view-registry:main')[$('.chat-display')[0].id].currentUserNick
+
+  slowModeRejectionRegex: /This room is in slow mode and you are sending messages too quickly\. You will be able to talk again in (\d+) seconds\./

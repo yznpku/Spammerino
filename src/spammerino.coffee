@@ -3,6 +3,7 @@ MutationObserver = window.MutationObserver or window.WebKitMutationObserver;
 observerConfig = { childList: true, subtree: true }
 
 spamButtonHtml = '<div class="spam-button"><img /></div>'
+pendingMessagePanelHtml = '<div class="pending-message-panel"><div class="pending-message"><p>MESSAGE PENDING</p><p>DUE TO</p><p class="pending-reason"></p></div><div class="circle"><div class="glow"></div><p class="pending-time">5</p></div></div>'
 
 new Promise $('document').ready
 .then ->
@@ -13,6 +14,17 @@ new Promise $('document').ready
           when Spammerino.site.isValidChatLine node
             if Spammerino.config['repeat-button-toggle']
               insertSpamButton node
+            currentUser = Spammerino.site.currentUser()
+            message = Spammerino.site.spamMessage node
+            if currentUser == message.from
+              Spammerino.lastMessage = message
+
+          when Spammerino.site.isAdminChatLine node
+            message = Spammerino.site.spamMessage(node).message
+            switch
+              when message.match Spammerino.site.slowModeRejectionRegex
+                time = parseInt(message.match(Spammerino.site.slowModeRejectionRegex)[1]) + 1
+                schedulePendingMessage Spammerino.lastMessage.message, 'SLOW MODE', time
 
           when Spammerino.site.isChatMessagesRoot node
             if Spammerino.config['hover-pin-toggle']
@@ -25,6 +37,9 @@ new Promise $('document').ready
               $('.chat-room').addClass 'spammerino-highlight'
             installSpamButtonActions node
             replaceEmoteClickActions node
+
+          when Spammerino.site.isChatInterface node
+            insertPendingMessagePanel node
 
   observer.observe $('body')[0], observerConfig
 
@@ -49,7 +64,7 @@ insertSpamButton = (parent) ->
 
 installSpamButtonActions = (parent) ->
   $(parent).on 'click', '.spam-button', (e) ->
-    message = Spammerino.site.spamMessage @
+    message = Spammerino.site.spamMessage(@parentNode).message
     switch
       when e.shiftKey
         if Spammerino.config['repeat-button-shift-click-toggle']
@@ -120,3 +135,20 @@ installGlobalHoverPin = ->
 
   # Add a class to disable 'More messages below.' message mouse event capturing
   $('.chat-room').addClass 'spammerino-global-hover-pin'
+
+insertPendingMessagePanel = (chatInterface) ->
+  panel = $.parseHTML(pendingMessagePanelHtml)[0]
+  $(chatInterface).append panel
+  panel.setAttribute 'hidden', ''
+
+schedulePendingMessage = (message, reason, time) ->
+  if Spammerino.pendingTimer?.running
+    Spammerino.pendingTimer.stop()
+  $('.pending-message-panel .pending-reason').text reason
+  $('.pending-message-panel').removeAttr 'hidden'
+  Spammerino.pendingTimer = new Spammerino.Countdown time * 1000, 1000, ->
+    messageActionHandler message, 'send'
+    $('.pending-message-panel').attr 'hidden', ''
+  , ->
+    $('.pending-message-panel .pending-time').text time.toString()
+    time -= 1

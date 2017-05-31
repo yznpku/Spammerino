@@ -29,3 +29,69 @@
   top: 50%;
   transform: translate(-50%, -50%);
 }
+
+.pending-message-panel {
+  position: absolute;
+  background-color: #E6EE9C;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  opacity: 0.85;
+}
+
+.pending-message-panel .circle {
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  top: 50%;
+  left: 70%;
+  margin: -25px 0 0 -25px;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+}
+
+.pending-message-panel .circle .glow {
+  position: absolute;
+  content: '';
+  height: 100%;
+  width: 100%;
+  top: 0%;
+  left: 0%;
+  border-radius: 50%;
+  box-shadow: 0 0 30px #000000;
+  animation: glow-grow 1s ease-out infinite;
+}
+
+@keyframes glow-grow {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.pending-message-panel .pending-message {
+  position: absolute;
+  width: 60%;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+.pending-message-panel .pending-message p {
+  text-align: center;
+  color: black;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font-size: larger;
+  padding: 2px;
+}
+
+.pending-message-panel .circle p {
+  color: black;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: large;
+}

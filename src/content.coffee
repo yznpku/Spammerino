@@ -20,5 +20,6 @@ new Promise (success) ->
 .then ->
   injectCode 'window.Spammerino = ' + JSON.stringify Spammerino
   injectFile 'js/clipboard.js'
+  injectFile 'js/countdown.js'
   injectFile 'js/twitch.js'
   injectFile 'js/spammerino.js'

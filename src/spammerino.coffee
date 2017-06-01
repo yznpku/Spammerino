@@ -29,11 +29,18 @@ new Promise $('document').ready
                   schedulePendingMessage Spammerino.lastMessage.message, 'SLOW MODE', time
               when message == Spammerino.site.identicalMessageRejection
                 if Spammerino.config['pending-message-identical-message-toggle'] and Spammerino.last2ndMessage?
-                  time = 31 - Math.floor (Spammerino.lastMessage.date - Spammerino.last2ndMessage.date) / 1000
-                  schedulePendingMessage Spammerino.lastMessage.message, 'IDENTICAL MESSAGE', time
+                  switch Spammerino.config['pending-message-identical-message']
+                    when 'wait'
+                      time = 31 - Math.floor (Spammerino.lastMessage.date - Spammerino.last2ndMessage.date) / 1000
+                      schedulePendingMessage Spammerino.lastMessage.message, 'IDENTICAL MESSAGE', time
+                    when 'modify'
+                      schedulePendingMessage randomizeMessage(Spammerino.lastMessage.message, '\u200B\u200C\u180E'), 'IDENTICAL MESSAGE', 2
               when message == Spammerino.site.sendingTooFastRejection
                 if Spammerino.config['pending-message-sending-too-fast-toggle']
                   schedulePendingMessage Spammerino.lastMessage.message, 'SENDING TOO FAST', 2
+              when message == Spammerino.site.r9kRejection
+                if Spammerino.config['pending-message-r9k-toggle']
+                  schedulePendingMessage randomizeMessage(Spammerino.lastMessage.message, 'bcdfhIklnrstvxz0123456789'), 'R9K MODE', 2
 
           when Spammerino.site.isChatMessagesRoot node
             if Spammerino.config['hover-pin-toggle']
@@ -171,3 +178,13 @@ removePendingMessage = ->
     Spammerino.pendingTimer.stop()
   $('.pending-message-panel').attr 'hidden', ''
   Spammerino.site.chatInputArea().removeAttr 'disabled'
+
+randomizedMessageRegex = /^\u00AD.+?\u00AD\s+(.+)$/
+randomizePrefix = (charset) ->
+  (charset[Math.floor(Math.random() * charset.length)] for i in [0...2]).join ''
+randomizeMessage = (message, charset) ->
+  match = message.match randomizedMessageRegex
+  if match
+    '\u00AD' + randomizePrefix(charset) + '\u00AD ' + match[1]
+  else
+    '\u00AD' + randomizePrefix(charset) + '\u00AD ' + message

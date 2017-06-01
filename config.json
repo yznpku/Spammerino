@@ -101,19 +101,38 @@
     "name": "Schedule a resend for rejected messages",
     "children": [
       {
-        "id": "pending-message-slow-mode",
-        "name": "Messages rejected due to slow mode",
-        "toggle": { "default": true }
-      },
-      {
-        "id": "pending-message-identical-message",
-        "name": "Messages rejected for being identical to the previous one",
-        "toggle": { "default": true }
-      },
-      {
-        "id": "pending-message-sending-too-fast",
-        "name": "Messages rejected for being sent too fast",
-        "toggle": { "default": true }
+        "id": "rejection-reason",
+        "name": "Rejection Reason:",
+        "children": [
+          {
+            "id": "pending-message-slow-mode",
+            "name": "Slow mode",
+            "toggle": { "default": true }
+          },
+          {
+            "id": "pending-message-identical-message",
+            "name": "Identical to previous one",
+            "toggle": { "default": true },
+            "options": {
+              "type": "select",
+              "select": [
+                { "id": "wait", "name": "Wait for 30 seconds and send again" },
+                { "id": "modify", "name": "Randomize the message and send again" }
+              ],
+              "default": "wait"
+            }
+          },
+          {
+            "id": "pending-message-sending-too-fast",
+            "name": "Sending too fast",
+            "toggle": { "default": true }
+          },
+          {
+            "id": "pending-message-r9k",
+            "name": "R9k mode",
+            "toggle": { "default": false }
+          }
+        ]
       }
     ]
   }

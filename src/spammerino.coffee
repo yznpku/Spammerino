@@ -3,7 +3,7 @@ MutationObserver = window.MutationObserver or window.WebKitMutationObserver;
 observerConfig = { childList: true, subtree: true }
 
 spamButtonHtml = '<div class="spam-button"><img /></div>'
-pendingMessagePanelHtml = '<div class="pending-message-panel"><div class="pending-message"><p>MESSAGE PENDING</p><p>DUE TO</p><p class="pending-reason"></p></div><div class="circle"><div class="glow"></div><p class="pending-time">5</p></div></div>'
+pendingMessagePanelHtml = '<div class="pending-message-panel"><div class="pending-message"><p>MESSAGE PENDING</p><p>DUE TO</p><p class="pending-reason"></p></div><div class="circle"><div class="glow"></div><p class="pending-time">5</p></div><div class="close-button"><img></div></div>'
 
 new Promise $('document').ready
 .then ->
@@ -47,7 +47,6 @@ messageActionHandler = (message, action) ->
   switch action
     when 'send'
       Spammerino.site.chatInputArea().focus().val(message).blur()
-      Spammerino.site.chatSendButton().click()
       setTimeout (-> Spammerino.site.chatSendButton().click()), 0
     when 'copy'
       Spammerino.copyToClipboard message
@@ -65,6 +64,7 @@ insertSpamButton = (parent) ->
 
 installSpamButtonActions = (parent) ->
   $(parent).on 'click', '.spam-button', (e) ->
+    removePendingMessage()
     message = Spammerino.site.spamMessage(@parentNode).message
     switch
       when e.shiftKey
@@ -139,6 +139,8 @@ installGlobalHoverPin = ->
 
 insertPendingMessagePanel = (chatInterface) ->
   panel = $.parseHTML(pendingMessagePanelHtml)[0]
+  $(panel).find('.close-button img').attr 'src', Spammerino.closeButtonImageSrc
+  $(panel).find('.close-button').click -> removePendingMessage()
   $(chatInterface).append panel
   panel.setAttribute 'hidden', ''
 
@@ -149,7 +151,12 @@ schedulePendingMessage = (message, reason, time) ->
   $('.pending-message-panel').removeAttr 'hidden'
   Spammerino.pendingTimer = new Spammerino.Countdown time * 1000, 1000, ->
     messageActionHandler message, 'send'
-    $('.pending-message-panel').attr 'hidden', ''
+    removePendingMessage()
   , ->
     $('.pending-message-panel .pending-time').text time.toString()
     time -= 1
+
+removePendingMessage = ->
+  if Spammerino.pendingTimer?.running
+    Spammerino.pendingTimer.stop()
+  $('.pending-message-panel').attr 'hidden', ''

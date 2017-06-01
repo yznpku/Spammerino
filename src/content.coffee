@@ -18,6 +18,9 @@ injectFile = (fileName) ->
 new Promise (success) ->
   Spammerino.initConfig success
 .then ->
+  Object.assign Spammerino,
+    buttonImageSrc: chrome.extension.getURL 'image/logo16.png'
+    closeButtonImageSrc: chrome.extension.getURL 'image/cross.png'
   injectCode 'window.Spammerino = ' + JSON.stringify Spammerino
   injectFile 'js/clipboard.js'
   injectFile 'js/countdown.js'

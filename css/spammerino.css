@@ -95,3 +95,25 @@
   transform: translate(-50%, -50%);
   font-size: large;
 }
+
+.pending-message-panel .close-button {
+  position: absolute;
+  top: 50%;
+  left: 85%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  cursor: pointer;
+}
+
+.pending-message-panel .close-button:hover {
+  background: rgba(128, 128, 128, 0.2)
+}
+
+.pending-message-panel .close-button:active {
+  background: rgba(128, 128, 128, 0.4)
+}
+
+.pending-message-panel .close-button img {
+  display: block;
+  opacity: 0.8;
+}

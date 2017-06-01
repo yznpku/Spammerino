@@ -24,14 +24,16 @@ new Promise $('document').ready
             message = Spammerino.site.spamMessage(node).message
             switch
               when message.match Spammerino.site.slowModeRejectionRegex
-                time = parseInt(message.match(Spammerino.site.slowModeRejectionRegex)[1]) + 1
-                schedulePendingMessage Spammerino.lastMessage.message, 'SLOW MODE', time
+                if Spammerino.config['pending-message-slow-mode-toggle']
+                  time = parseInt(message.match(Spammerino.site.slowModeRejectionRegex)[1]) + 1
+                  schedulePendingMessage Spammerino.lastMessage.message, 'SLOW MODE', time
               when message == Spammerino.site.identicalMessageRejection
-                if Spammerino.last2ndMessage?
+                if Spammerino.config['pending-message-identical-message-toggle'] and Spammerino.last2ndMessage?
                   time = 31 - Math.floor (Spammerino.lastMessage.date - Spammerino.last2ndMessage.date) / 1000
                   schedulePendingMessage Spammerino.lastMessage.message, 'IDENTICAL MESSAGE', time
               when message == Spammerino.site.sendingTooFastRejection
-                schedulePendingMessage Spammerino.lastMessage.message, 'SENDING TOO FAST', 2
+                if Spammerino.config['pending-message-sending-too-fast-toggle']
+                  schedulePendingMessage Spammerino.lastMessage.message, 'SENDING TOO FAST', 2
 
           when Spammerino.site.isChatMessagesRoot node
             if Spammerino.config['hover-pin-toggle']

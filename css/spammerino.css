@@ -29,3 +29,94 @@
   top: 50%;
   transform: translate(-50%, -50%);
 }
+
+.pending-message-panel {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  background-color: white;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  font-family: "Open Sans", system-ui;
+}
+
+.pending-message-panel .circle {
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  top: 50%;
+  left: 70%;
+  margin: -25px 0 0 -25px;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+}
+
+.pending-message-panel .circle .glow {
+  position: absolute;
+  content: '';
+  height: 100%;
+  width: 100%;
+  top: 0%;
+  left: 0%;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #000000;
+  animation: glow-grow 1s ease-out infinite;
+}
+
+@keyframes glow-grow {
+  0% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.pending-message-panel .pending-message {
+  position: absolute;
+  width: 60%;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+.pending-message-panel .pending-message p {
+  text-align: center;
+  color: black;
+  font-size: larger;
+  padding: 2px;
+}
+
+.pending-message-panel .circle p {
+  color: black;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: large;
+}
+
+.pending-message-panel .close-button {
+  position: absolute;
+  top: 50%;
+  left: 90%;
+  transform: translate(-50%, -50%);
+  padding: 5px;
+  cursor: pointer;
+}
+
+.pending-message-panel .close-button:hover {
+  background: rgba(128, 128, 128, 0.2)
+}
+
+.pending-message-panel .close-button:active {
+  background: rgba(128, 128, 128, 0.4)
+}
+
+.pending-message-panel .close-button img {
+  display: block;
+  opacity: 0.6;
+}

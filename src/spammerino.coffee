@@ -3,6 +3,7 @@ MutationObserver = window.MutationObserver or window.WebKitMutationObserver;
 observerConfig = { childList: true, subtree: true }
 
 spamButtonHtml = '<div class="spam-button"><img /></div>'
+pendingMessagePanelHtml = '<div class="pending-message-panel"><div class="pending-message"><p>MESSAGE PENDING</p><p>DUE TO</p><p class="pending-reason"></p></div><div class="circle"><div class="glow"></div><p class="pending-time">5</p></div><div class="close-button"><img></div></div>'
 
 new Promise $('document').ready
 .then ->
@@ -13,6 +14,26 @@ new Promise $('document').ready
           when Spammerino.site.isValidChatLine node
             if Spammerino.config['repeat-button-toggle']
               insertSpamButton node
+            currentUser = Spammerino.site.currentUser()
+            message = Spammerino.site.spamMessage node
+            if currentUser == message.from
+              Spammerino.last2ndMessage = Spammerino.lastMessage
+              Spammerino.lastMessage = message
+
+          when Spammerino.site.isAdminChatLine node
+            message = Spammerino.site.spamMessage(node).message
+            switch
+              when message.match Spammerino.site.slowModeRejectionRegex
+                if Spammerino.config['pending-message-slow-mode-toggle']
+                  time = parseInt(message.match(Spammerino.site.slowModeRejectionRegex)[1]) + 1
+                  schedulePendingMessage Spammerino.lastMessage.message, 'SLOW MODE', time
+              when message == Spammerino.site.identicalMessageRejection
+                if Spammerino.config['pending-message-identical-message-toggle'] and Spammerino.last2ndMessage?
+                  time = 31 - Math.floor (Spammerino.lastMessage.date - Spammerino.last2ndMessage.date) / 1000
+                  schedulePendingMessage Spammerino.lastMessage.message, 'IDENTICAL MESSAGE', time
+              when message == Spammerino.site.sendingTooFastRejection
+                if Spammerino.config['pending-message-sending-too-fast-toggle']
+                  schedulePendingMessage Spammerino.lastMessage.message, 'SENDING TOO FAST', 2
 
           when Spammerino.site.isChatMessagesRoot node
             if Spammerino.config['hover-pin-toggle']
@@ -26,13 +47,16 @@ new Promise $('document').ready
             installSpamButtonActions node
             replaceEmoteClickActions node
 
+          when Spammerino.site.isChatInterface node
+            insertPendingMessagePanel node
+
   observer.observe $('body')[0], observerConfig
 
 messageActionHandler = (message, action) ->
   switch action
     when 'send'
       Spammerino.site.chatInputArea().focus().val(message).blur()
-      Spammerino.site.chatSendButton().click()
+      setTimeout (-> Spammerino.site.chatSendButton().click()), 0
     when 'copy'
       Spammerino.copyToClipboard message
     when 'overwrite'
@@ -49,7 +73,8 @@ insertSpamButton = (parent) ->
 
 installSpamButtonActions = (parent) ->
   $(parent).on 'click', '.spam-button', (e) ->
-    message = Spammerino.site.spamMessage @
+    removePendingMessage()
+    message = Spammerino.site.spamMessage(@parentNode).message
     switch
       when e.shiftKey
         if Spammerino.config['repeat-button-shift-click-toggle']
@@ -120,3 +145,29 @@ installGlobalHoverPin = ->
 
   # Add a class to disable 'More messages below.' message mouse event capturing
   $('.chat-room').addClass 'spammerino-global-hover-pin'
+
+insertPendingMessagePanel = (chatInterface) ->
+  panel = $.parseHTML(pendingMessagePanelHtml)[0]
+  $(panel).find('.close-button img').attr 'src', Spammerino.closeButtonImageSrc
+  $(panel).find('.close-button').click -> removePendingMessage()
+  $(chatInterface).append panel
+  panel.setAttribute 'hidden', ''
+
+schedulePendingMessage = (message, reason, time) ->
+  if Spammerino.pendingTimer?.running
+    Spammerino.pendingTimer.stop()
+  $('.pending-message-panel .pending-reason').text reason
+  $('.pending-message-panel').removeAttr 'hidden'
+  Spammerino.site.chatInputArea().attr 'disabled', ''
+  Spammerino.pendingTimer = new Spammerino.Countdown time * 1000, 1000, ->
+    messageActionHandler message, 'send'
+    removePendingMessage()
+  , ->
+    $('.pending-message-panel .pending-time').text time.toString()
+    time -= 1
+
+removePendingMessage = ->
+  if Spammerino.pendingTimer?.running
+    Spammerino.pendingTimer.stop()
+  $('.pending-message-panel').attr 'hidden', ''
+  Spammerino.site.chatInputArea().removeAttr 'disabled'

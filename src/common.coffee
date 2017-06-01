@@ -49,5 +49,4 @@ Object.assign Spammerino,
         configDef: configDef
         configList: configList
         config: config
-        buttonImageSrc: chrome.extension.getURL 'image/logo16.png'
       success()

@@ -95,5 +95,26 @@
         "toggle": { "default": true }
       }
     ]
+  },
+  {
+    "id": "pending-message",
+    "name": "Schedule a resend for rejected messages",
+    "children": [
+      {
+        "id": "pending-message-slow-mode",
+        "name": "Messages rejected due to slow mode",
+        "toggle": { "default": true }
+      },
+      {
+        "id": "pending-message-identical-message",
+        "name": "Messages rejected for being identical to the previous one",
+        "toggle": { "default": true }
+      },
+      {
+        "id": "pending-message-sending-too-fast",
+        "name": "Messages rejected for being sent too fast",
+        "toggle": { "default": true }
+      }
+    ]
   }
 ]

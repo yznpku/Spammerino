@@ -149,6 +149,7 @@ schedulePendingMessage = (message, reason, time) ->
     Spammerino.pendingTimer.stop()
   $('.pending-message-panel .pending-reason').text reason
   $('.pending-message-panel').removeAttr 'hidden'
+  Spammerino.site.chatInputArea().attr 'disabled', ''
   Spammerino.pendingTimer = new Spammerino.Countdown time * 1000, 1000, ->
     messageActionHandler message, 'send'
     removePendingMessage()
@@ -160,3 +161,4 @@ removePendingMessage = ->
   if Spammerino.pendingTimer?.running
     Spammerino.pendingTimer.stop()
   $('.pending-message-panel').attr 'hidden', ''
+  Spammerino.site.chatInputArea().removeAttr 'disabled'

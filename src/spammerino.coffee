@@ -48,6 +48,7 @@ messageActionHandler = (message, action) ->
     when 'send'
       Spammerino.site.chatInputArea().focus().val(message).blur()
       Spammerino.site.chatSendButton().click()
+      setTimeout (-> Spammerino.site.chatSendButton().click()), 0
     when 'copy'
       Spammerino.copyToClipboard message
     when 'overwrite'

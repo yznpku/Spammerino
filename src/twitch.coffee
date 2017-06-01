@@ -28,3 +28,5 @@ Spammerino.site =
     window.App.__container__.lookup('-view-registry:main')[$('.chat-display')[0].id].currentUserNick
 
   slowModeRejectionRegex: /This room is in slow mode and you are sending messages too quickly\. You will be able to talk again in (\d+) seconds\./
+  identicalMessageRejection: 'Your message was not sent because it is identical to the previous one you sent, less than 30 seconds ago.'
+  sendingTooFastRejection: 'Your message was not sent because you are sending messages too quickly.'

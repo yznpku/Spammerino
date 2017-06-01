@@ -17,6 +17,7 @@ new Promise $('document').ready
             currentUser = Spammerino.site.currentUser()
             message = Spammerino.site.spamMessage node
             if currentUser == message.from
+              Spammerino.last2ndMessage = Spammerino.lastMessage
               Spammerino.lastMessage = message
 
           when Spammerino.site.isAdminChatLine node
@@ -25,6 +26,12 @@ new Promise $('document').ready
               when message.match Spammerino.site.slowModeRejectionRegex
                 time = parseInt(message.match(Spammerino.site.slowModeRejectionRegex)[1]) + 1
                 schedulePendingMessage Spammerino.lastMessage.message, 'SLOW MODE', time
+              when message == Spammerino.site.identicalMessageRejection
+                if Spammerino.last2ndMessage?
+                  time = 31 - Math.floor (Spammerino.lastMessage.date - Spammerino.last2ndMessage.date) / 1000
+                  schedulePendingMessage Spammerino.lastMessage.message, 'IDENTICAL MESSAGE', time
+              when message == Spammerino.site.sendingTooFastRejection
+                schedulePendingMessage Spammerino.lastMessage.message, 'SENDING TOO FAST', 2
 
           when Spammerino.site.isChatMessagesRoot node
             if Spammerino.config['hover-pin-toggle']

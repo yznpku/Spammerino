@@ -6,6 +6,7 @@
 .spammerino-highlight .chat-messages .chat-line:hover {
   background-color: #EF5350 !important;
   border-bottom-color: #EF5350 !important;
+  z-index: 1;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 

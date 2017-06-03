@@ -75,7 +75,7 @@ messageActionHandler = (message, action) ->
       Spammerino.site.chatInputArea().focus().val(message + ' ').blur().focus()
     when 'append'
       currentString = Spammerino.site.chatInputArea().val()
-      currentString += ' ' if not currentString.endsWith ' '
+      currentString += ' ' if currentString and not currentString.endsWith ' '
       Spammerino.site.chatInputArea().focus().val(currentString + message + ' ').blur().focus()
 
 insertSpamButton = (parent) ->

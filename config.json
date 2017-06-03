@@ -99,6 +99,7 @@
   {
     "id": "pending-message",
     "name": "Schedule a resend for rejected messages",
+    "toggle": { "default": true },
     "children": [
       {
         "id": "rejection-reason",
@@ -130,6 +131,11 @@
           {
             "id": "pending-message-r9k",
             "name": "R9k mode",
+            "toggle": { "default": false }
+          },
+          {
+            "id": "pending-message-timeout",
+            "name": "Timeout",
             "toggle": { "default": false }
           }
         ]

@@ -6,7 +6,7 @@ This browser extension provides several handy tweaks to improve your Twitch chat
 Features
 ---
 
-* **Repeat button**: Add a button after each message in twitch chat. Click it and you'll send the exact same message to the chat.
+* **Repeat Button**: Add a button after each message in twitch chat. Click it and you'll send the exact same message to the chat.
 * **Message Hover-pin**: Messages from the chat history are rarely expected to keep scrolling under your cursor. Spammerino auto locks the chat history for you whenever you hover over the chat history area.
 * **Chat History Emote Clicking**: In most cases, the emote you want to send is already present in the chat history. Instead of typing the emote or finding it in the emote menu, you can now grab that emote directly from chat history by simply clicking it.
 * **Rejected Messages Resending**: Sometimes your attempt to send a message may fail due to various reasons, such as slow mode, r9k mode, or your message is identical to the previous one within 30 seconds. To successfully send your message, you either have to wait or modify the message, and then resend it. Spammerino will do this (wait/modification + resend) for you automatically.

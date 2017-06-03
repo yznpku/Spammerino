@@ -1,9 +1,7 @@
 Spammerino
 ===
 
-This extension enables you to repeat any Twitch chat messages with one simple click.
-
-There are also other QoL tweaks to Twitch chat. See the feature list below for details.
+This browser extension provides several handy tweaks to improve your Twitch chat efficiency.
 
 Features
 ---
@@ -29,6 +27,7 @@ Dev Plan
 
 The following features are in the plan. Keep an eye on the updates!
 
+* **Important message area**: Messages that you consider important (e.g. from channel host, verified users or your friends) will be displayed in a special reserved area to prevent them from being overwhelmed.
 * **Recommended message**: We will analyze on the fly what most people are talking about. See whether you want to say the same thing!
 * **Message archive**: Save some messages for later usage.
 * **Support other browsers other than Chrome**.

@@ -131,6 +131,11 @@
             "id": "pending-message-r9k",
             "name": "R9k mode",
             "toggle": { "default": false }
+          },
+          {
+            "id": "pending-message-timeout",
+            "name": "Timeout",
+            "toggle": { "default": false }
           }
         ]
       }

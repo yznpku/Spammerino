@@ -31,3 +31,4 @@ Spammerino.site =
   identicalMessageRejection: 'Your message was not sent because it is identical to the previous one you sent, less than 30 seconds ago.'
   sendingTooFastRejection: 'Your message was not sent because you are sending messages too quickly.'
   r9kRejection: 'This room is in r9k mode and the message you attempted to send is not unique. See http://link.twitch.tv/r9k for more details.'
+  timeoutRejectionRegex: /You are banned from talking in .+? for (\d+) more seconds\./

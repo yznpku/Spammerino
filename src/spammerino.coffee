@@ -41,6 +41,10 @@ new Promise $('document').ready
               when message == Spammerino.site.r9kRejection
                 if Spammerino.config['pending-message-r9k-toggle']
                   schedulePendingMessage randomizeMessage(Spammerino.lastMessage.message, 'bcdfhIklnrstvxz0123456789'), 'R9K MODE', 2
+              when message.match Spammerino.site.timeoutRejectionRegex
+                if Spammerino.config['pending-message-timeout-toggle']
+                  time = parseInt(message.match(Spammerino.site.timeoutRejectionRegex)[1]) + 1
+                  schedulePendingMessage Spammerino.lastMessage.message, 'TIMEOUT', time
 
           when Spammerino.site.isChatMessagesRoot node
             if Spammerino.config['hover-pin-toggle']

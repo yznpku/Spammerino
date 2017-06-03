@@ -22,29 +22,30 @@ new Promise $('document').ready
 
           when Spammerino.site.isAdminChatLine node
             message = Spammerino.site.spamMessage(node).message
-            switch
-              when message.match Spammerino.site.slowModeRejectionRegex
-                if Spammerino.config['pending-message-slow-mode-toggle']
-                  time = parseInt(message.match(Spammerino.site.slowModeRejectionRegex)[1]) + 1
-                  schedulePendingMessage Spammerino.lastMessage.message, 'SLOW MODE', time
-              when message == Spammerino.site.identicalMessageRejection
-                if Spammerino.config['pending-message-identical-message-toggle'] and Spammerino.last2ndMessage?
-                  switch Spammerino.config['pending-message-identical-message']
-                    when 'wait'
-                      time = 31 - Math.floor (Spammerino.lastMessage.date - Spammerino.last2ndMessage.date) / 1000
-                      schedulePendingMessage Spammerino.lastMessage.message, 'IDENTICAL MESSAGE', time
-                    when 'modify'
-                      schedulePendingMessage randomizeMessage(Spammerino.lastMessage.message, '\u200B\u200C\u180E'), 'IDENTICAL MESSAGE', 2
-              when message == Spammerino.site.sendingTooFastRejection
-                if Spammerino.config['pending-message-sending-too-fast-toggle']
-                  schedulePendingMessage Spammerino.lastMessage.message, 'SENDING TOO FAST', 2
-              when message == Spammerino.site.r9kRejection
-                if Spammerino.config['pending-message-r9k-toggle']
-                  schedulePendingMessage randomizeMessage(Spammerino.lastMessage.message, 'bcdfhIklnrstvxz0123456789'), 'R9K MODE', 2
-              when message.match Spammerino.site.timeoutRejectionRegex
-                if Spammerino.config['pending-message-timeout-toggle']
-                  time = parseInt(message.match(Spammerino.site.timeoutRejectionRegex)[1]) + 1
-                  schedulePendingMessage Spammerino.lastMessage.message, 'TIMEOUT', time
+            if Spammerino.config['pending-message-toggle']
+              switch
+                when message.match Spammerino.site.slowModeRejectionRegex
+                  if Spammerino.config['pending-message-slow-mode-toggle']
+                    time = parseInt(message.match(Spammerino.site.slowModeRejectionRegex)[1]) + 1
+                    schedulePendingMessage Spammerino.lastMessage.message, 'SLOW MODE', time
+                when message == Spammerino.site.identicalMessageRejection
+                  if Spammerino.config['pending-message-identical-message-toggle'] and Spammerino.last2ndMessage?
+                    switch Spammerino.config['pending-message-identical-message']
+                      when 'wait'
+                        time = 31 - Math.floor (Spammerino.lastMessage.date - Spammerino.last2ndMessage.date) / 1000
+                        schedulePendingMessage Spammerino.lastMessage.message, 'IDENTICAL MESSAGE', time
+                      when 'modify'
+                        schedulePendingMessage randomizeMessage(Spammerino.lastMessage.message, '\u200B\u200C\u180E'), 'IDENTICAL MESSAGE', 2
+                when message == Spammerino.site.sendingTooFastRejection
+                  if Spammerino.config['pending-message-sending-too-fast-toggle']
+                    schedulePendingMessage Spammerino.lastMessage.message, 'SENDING TOO FAST', 2
+                when message == Spammerino.site.r9kRejection
+                  if Spammerino.config['pending-message-r9k-toggle']
+                    schedulePendingMessage randomizeMessage(Spammerino.lastMessage.message, 'bcdfhIklnrstvxz0123456789'), 'R9K MODE', 2
+                when message.match Spammerino.site.timeoutRejectionRegex
+                  if Spammerino.config['pending-message-timeout-toggle']
+                    time = parseInt(message.match(Spammerino.site.timeoutRejectionRegex)[1]) + 1
+                    schedulePendingMessage Spammerino.lastMessage.message, 'TIMEOUT', time
 
           when Spammerino.site.isChatMessagesRoot node
             if Spammerino.config['hover-pin-toggle']

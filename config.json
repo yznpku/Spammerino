@@ -99,6 +99,7 @@
   {
     "id": "pending-message",
     "name": "Schedule a resend for rejected messages",
+    "toggle": { "default": true },
     "children": [
       {
         "id": "rejection-reason",

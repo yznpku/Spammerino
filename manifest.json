@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "Spammerino - Twitch Chat Enhancement",
-	"version": "1.3.2",
+	"version": "1.3.3",
 	"description": "Provides several handy tweaks to improve your Twitch chat efficiency.",
 	"homepage_url": "https://github.com/yznpku/Spammerino",
 	"icons": {
